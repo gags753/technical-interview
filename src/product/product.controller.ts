@@ -1,8 +1,17 @@
-import { Controller, Get, Param, Query, ValidationPipe } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Query,
+  ValidationPipe,
+} from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { ProductService } from './product.service';
+import { CreateProductDto } from './dto/createProduct.dto';
 import { GetProductIdDto } from './dto/getProductId.dto';
 import { PaginationDto } from './dto/pagination.dto';
+import { ProductService } from './product.service';
 
 @ApiTags('Produto')
 @Controller('product')
@@ -20,5 +29,14 @@ export class ProductController {
     @Query(new ValidationPipe({ transform: true })) pagination: PaginationDto,
   ) {
     return await this.productService.getProducts(id, pagination);
+  }
+
+  @Post()
+  @ApiOperation({
+    summary: 'Criar produto',
+    description: 'Criação de um produto novo no sistema',
+  })
+  async createProduct(@Body() data: CreateProductDto) {
+    await this.productService.createProduct(data);
   }
 }

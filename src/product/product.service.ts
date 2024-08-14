@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { CreateProductDto } from './dto/createProduct.dto';
 import { GetProductIdDto } from './dto/getProductId.dto';
 import { PaginationDto } from './dto/pagination.dto';
 import ProductEntity from './entities/product.entity';
@@ -30,5 +31,13 @@ export class ProductService {
       page: defaultPage,
       totalPages,
     };
+  }
+
+  async createProduct(data: CreateProductDto) {
+    const product = this.productRepository.create({
+      name: data.name,
+      value: data.value,
+    });
+    await this.productRepository.save(product);
   }
 }
