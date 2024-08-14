@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -53,5 +54,16 @@ export class ProductController {
     @Body() data: UpdateProductDto,
   ) {
     return await this.productService.updateProduct(id, data);
+  }
+
+  @Delete('/:id?')
+  @ApiOperation({
+    summary: 'Deleta produto',
+    description: 'Deleta um produto a partir de um id',
+  })
+  async deleteProduct(
+    @Param(new ValidationPipe({ transform: true })) id: ProductIdDto,
+  ) {
+    return await this.productService.deleteProduct(id);
   }
 }

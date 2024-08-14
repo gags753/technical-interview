@@ -59,4 +59,14 @@ export class ProductService {
 
     await this.productRepository.save(product);
   }
+
+  async deleteProduct({ id }: ProductIdDto) {
+    const product = await this.productRepository.findOne({ where: { id } });
+
+    if (!product) {
+      throw new NotFoundException('Produto não encontrado');
+    }
+
+    await this.productRepository.delete(id);
+  }
 }
