@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { ProductModule } from './product/product.module';
 import 'dotenv/config';
 
 @Module({
@@ -15,6 +16,7 @@ import 'dotenv/config';
       database: process.env.DATABASE_NAME,
       schema: process.env.SCHEMA ? process.env.SCHEMA : 'public',
     }),
+    ProductModule,
   ],
   controllers: [AppController],
   providers: [AppService],
