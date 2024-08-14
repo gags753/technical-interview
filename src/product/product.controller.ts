@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   Param,
+  Patch,
   Post,
   Query,
   ValidationPipe,
@@ -11,6 +12,8 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CreateProductDto } from './dto/createProduct.dto';
 import { GetProductIdDto } from './dto/getProductId.dto';
 import { PaginationDto } from './dto/pagination.dto';
+import { ProductIdDto } from './dto/productId.dto';
+import { UpdateProductDto } from './dto/updateProduct.dto';
 import { ProductService } from './product.service';
 
 @ApiTags('Produto')
@@ -38,5 +41,17 @@ export class ProductController {
   })
   async createProduct(@Body() data: CreateProductDto) {
     await this.productService.createProduct(data);
+  }
+
+  @Patch('/:id?')
+  @ApiOperation({
+    summary: 'Edita produto',
+    description: 'Edita um produto a partir de um id',
+  })
+  async updateProduct(
+    @Param(new ValidationPipe({ transform: true })) id: ProductIdDto,
+    @Body() data: UpdateProductDto,
+  ) {
+    return await this.productService.updateProduct(id, data);
   }
 }
