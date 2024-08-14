@@ -21,7 +21,7 @@ export class ProductSeeders {
         value: 250000,
       },
       {
-        name: 'duallsense',
+        name: 'Duallsense',
         value: 45000,
       },
       {
